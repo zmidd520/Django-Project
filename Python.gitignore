@@ -128,6 +128,7 @@ ENV/
 env.bak/
 venv.bak/
 djvenv/
+portfolio_app/
 
 # Spyder project settings
 .spyderproject
