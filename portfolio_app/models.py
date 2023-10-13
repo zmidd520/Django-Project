@@ -4,7 +4,7 @@ from django.urls import reverse
 class Portfolio(models.Model):
     title = models.CharField(max_length=200)
     contact_email = models.CharField(max_length=200)
-    isActive = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
     about = models.TextField(blank=True)
 
     #Define default String to return Portfolio Title
@@ -57,6 +57,7 @@ class Student(models.Model):
     def get_absolute_url(self):
         return reverse('student-detail', args=[str(self.id)])
 
+"""
 # Model to represent the relationship between projects and portfolios.
 # Each instance of this model will have a reference to a Portfolio and a Project,
 # creating a many-to-many relationship between portfolios and projects. T
@@ -73,3 +74,4 @@ class ProjectsInPortfolio(models.Model):
     class Meta:
     #ensures that each project is associated with only one portfolio
         unique_together = ('portfolio', 'project')
+"""
