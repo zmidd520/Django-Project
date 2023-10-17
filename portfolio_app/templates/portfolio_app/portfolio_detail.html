@@ -8,5 +8,19 @@
 <p><strong>About:</strong> {{ portfolio.about }}</p>
 <p><strong>Contact Email:</strong> {{ portfolio.contact_email }}</p>
 
+<h2>Project List</h2>
+<a class="btn btn-primary" href="{% url 'create_project' portfolio.id %}" role="button">New</a>
+
+<ul>
+    {% for project in project_data %}
+    {% if project.portfolio.title == portfolio.title %}
+    <li>
+        {{ project.title }}:
+            <a class="btn btn-primary" href="{{ project.get_absolute_url }}" role="button">View</a>
+            <a class="btn btn-danger" href="{% url 'delete_project' project.portfolio.id project.id %}" role="button">Delete</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
 
 {% endblock %}
