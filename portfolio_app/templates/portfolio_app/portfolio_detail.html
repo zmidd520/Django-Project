@@ -11,16 +11,20 @@
 <h2>Project List</h2>
 <a class="btn btn-primary" href="{% url 'create_project' portfolio.id %}" role="button">New</a>
 
+{% if project_data %}
 <ul>
     {% for project in project_data %}
     {% if project.portfolio.title == portfolio.title %}
     <li>
         {{ project.title }}:
             <a class="btn btn-primary" href="{{ project.get_absolute_url }}" role="button">View</a>
+            <a class="btn btn-info" href="{% url 'update_project' project.portfolio.id project.id %}" role="button">Update</a>
             <a class="btn btn-danger" href="{% url 'delete_project' project.portfolio.id project.id %}" role="button">Delete</a>
     </li>
     {% endif %}
     {% endfor %}
 </ul>
-
+{% else %}
+    <p>No projects at this time.</p>
+{% endif %}
 {% endblock %}

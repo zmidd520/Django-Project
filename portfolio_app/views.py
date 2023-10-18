@@ -17,8 +17,6 @@ class PortfolioListView(generic.ListView):
 class PortfolioDetailView(generic.DetailView):
         model = Portfolio
 
-        
-
         def get_context_data(self, **kwargs):
             # Call the base implementation first to get the context
             context = super(PortfolioDetailView, self).get_context_data(**kwargs)
@@ -70,6 +68,44 @@ def deleteProject(request, portfolio_id, project_id):
        # add info about the project to the HTML context
        context = {'project': project}
        return render(request, 'portfolio_app/project_delete.html', context)
+
+# update an existing project
+def updateProject(request, portfolio_id, project_id):
+       # get desired project from the database
+       project = Project.objects.get(pk=project_id)
+       # access the form for the specified project
+       form = ProjectForm(instance=project)
+
+       if request.method == "POST":
+              form = ProjectForm(request.POST, instance=project)
+              
+              # save the valid form to the database
+              if form.is_valid():
+                     form.save()
+
+              return redirect('portfolio-detail', portfolio_id)
+
+       context = {'form': form}
+       return render(request, 'portfolio_app/project_form.html', context)
+
+# update the information for an existing portfolio
+def updatePortfolio(request, student_id, portfolio_id):
+       # get the portfolio for the current student
+       portfolio = Portfolio.objects.get(pk=portfolio_id)
+       # access the form for the specified portfolio
+       form = PortfolioForm(instance=portfolio)
+
+       if request.method == "POST":
+              form = PortfolioForm(request.POST, instance=portfolio)
+              
+              # save the valid form to the database
+              if form.is_valid():
+                     form.save()
+
+              return redirect('student-detail', student_id)
+       
+       context = {'form': form}
+       return render(request, 'portfolio_app/portfolio_form.html', context)
 
 
 def index(request):
